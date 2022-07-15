@@ -13,24 +13,22 @@ You are given a large integer represented as an integer array digits, where each
 */
 public class Task5 {
     public static void main(String[] args) {
-        int[] intArray = {9};
+        int[] intArray = {8, 9, 9, 9};
         int[] result = plusOne(intArray);
         System.out.println(Arrays.toString(result));
     }
 
     public static int[] plusOne(int[] digits) {
-        int index = digits.length - 1;
-        while(digits[index] == 9) {
-            index--;
-            if (index < 0) {
-                digits = new int[digits.length + 1];
-                digits[0] = 1;
-                break;
+        for (int i = digits.length - 1; i >= 0; i--) {
+            if (digits[i] != 9) {
+                digits[i] += 1;
+                return digits;
+            } else {
+                digits[i] = 0;
             }
         }
-        if(index >= 0) {
-            digits[index]++;
-        }
-        return digits;
+        int[] result = new int[digits.length + 1];
+        result[0] = 1;
+        return result;
     }
 }
