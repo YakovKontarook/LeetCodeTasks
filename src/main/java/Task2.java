@@ -36,57 +36,30 @@ public class Task2 {
 
 
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode ans = new ListNode();
-        int carry = 0;
-        ListNode ret = ans;
-        while(l1 != null && l2 != null)
-        {
-            ListNode temp = new ListNode();
-            int sum = carry + l1.val + l2.val;
-            temp.val = sum%10;
-            carry = sum/10;
-            temp.next = null;
+        ListNode result = new ListNode(0);
+        ListNode pointer1 = l1, pointer2 = l2, currentNode = result;
+        int dozenCarrier = 0;
 
-            l1 = l1.next;
-            l2 = l2.next;
+        while(pointer1 != null || pointer2 != null) {
+            int pointer1Value = (pointer1 == null) ? 0: pointer1.val;
+            int pointer2Value = (pointer2 == null) ? 0: pointer2.val;
 
-            if(ans == null)
-                ans = temp;
-            else{
-                ans.next = temp;
-                ans = ans.next;
+            int sum = pointer1Value + pointer2Value + dozenCarrier;
+            dozenCarrier = sum / 10;
+            currentNode.next = new ListNode(sum%10);
+            currentNode = currentNode.next;
+
+            if(pointer1 != null) {
+                pointer1 = pointer1.next;
+            }
+            if(pointer2 != null) {
+                pointer2 = pointer2.next;
             }
         }
-
-        while(l1 != null){
-            ListNode temp = new ListNode();
-            temp.val = (l1.val+carry)%10;
-            carry = (l1.val+carry)/10;
-            temp.next = null;
-            ans.next = temp;
-            ans = ans.next;
-            l1 = l1.next;
+        if(dozenCarrier > 0) {
+            currentNode.next = new ListNode(dozenCarrier);
         }
-
-        while(l2 != null){
-            ListNode temp = new ListNode();
-            temp.val = (l2.val+carry)%10;
-            carry = (l2.val+carry)/10;
-            temp.next = null;
-            ans.next = temp;
-            ans = ans.next;
-            l2 = l2.next;
-        }
-
-        if(carry != 0){
-            ListNode temp = new ListNode();
-            temp.val = carry;
-            temp.next = null;
-            ans.next = temp;
-            ans = ans.next;
-        }
-
-        return ret.next;
+        return result.next;
     }
 }
 

@@ -10,14 +10,33 @@ Given an array of integers nums and an integer target, return indices of the two
         Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
 */
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Task1 {
 
     public static void main(String[] args) {
         int[] nums = new int[]{3, 2, 4};
         int target = 6;
-        for (int i : twoSum(nums, target)) {
+        for (int i : twoSum7ms(nums, target)) {
             System.out.println(i);
         }
+    }
+
+    public static int[] twoSum7ms(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], i);
+        }
+        for (int i = 0; i < nums.length; i++) {
+            int requiredNumber = target - nums[i];
+            if(map.containsKey(requiredNumber) && map.get(requiredNumber) != i) {
+
+                return new int[] {i, map.get(requiredNumber)};
+            }
+        }
+        throw new IllegalArgumentException();
     }
 
     public static int[] twoSum(int[] nums, int target) {

@@ -1,4 +1,3 @@
-
 /*
 //Given a string s, find the length of the longest substring without repeating characters.
 //Input: s = "abcabcbb"
@@ -13,19 +12,14 @@ public class Task3 {
     }
 
     public static int lengthOfLongestSubstring(String s) {
-        char[] charArray = s.toCharArray();
-        StringBuffer sb = new StringBuffer(s);
-        int counter = charArray.length;
-        int max = 0;
-        for (int i = 0; i < counter - 1; i++) {
-            int deleteChar = sb.lastIndexOf(String.valueOf(sb.charAt(i)));
-            while (deleteChar != -1 && deleteChar != i) {
-                sb.deleteCharAt(deleteChar);
-                counter -= 1;
-                deleteChar = sb.lastIndexOf(String.valueOf(sb.charAt(i)));
-            }
+        int count = 0;
+        int[] seen = new int[256];
+        for (int i = 0, j = 0; j < s.length(); j++) {
+            i = Math.max(i, seen[s.charAt(j)]);
+            count = Math.max(count, j - i + 1);
+            seen[s.charAt(j)] = j + 1;
         }
-        return sb.length();
+        return count;
     }
 }
 
